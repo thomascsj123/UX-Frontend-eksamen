@@ -1,7 +1,14 @@
 @import "tailwindcss";
 
+
+* {
+  margin: 0 !important;
+
+
+}
+
 :root {
-  --background: #ffffff;
+  --background: #845c5c;
   --foreground: #171717;
 }
 
@@ -15,7 +22,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #8c5f5f;
   }
 }
 
@@ -23,4 +30,94 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+
+}
+
+.loginpage-con {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 1);
+  width: 100%;
+  height: 100vh;
+
+
+
+}
+
+.login-input-con {
+  width: 100%;
+  height: 65%;
+  display: flex;
+  background: rgba(255, 255, 255, 1);
+  flex-direction: column;
+  padding: 10%;
+  gap: 10px;
+
+}
+
+
+.login-main-content-con {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  background: rgba(255, 255, 255, 1);
+
+
+}
+
+.loginpage-content-con {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 40%;
+  height: 65vh;
+  background: rgba(255, 255, 255, 1);
+
+
+
+}
+
+
+.login-btn-con {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 200px;
+  color: rgba(27, 64, 111, 1);
+  font-weight: 500;
+
+}
+
+.login-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(27, 64, 111, 1);
+  color: white;
+  border-radius: 20px;
+  width: 20%;
+  height: 100%;
+
+
+}
+
+.login-input-header {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  font-size: 30px;
+  color:rgb(35, 69, 139);
+  font-weight:600;
+
+
+}
+
+.login-main-content-con img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Or 'cover' if you want full bleed */
 }
