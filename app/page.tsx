@@ -52,7 +52,7 @@ export default function Home() {
 
             <p>Glemt oplysninger</p>
 
-            <div className="login-btn"><p>Log ind</p></div>
+            <div className="login-btn"><Link href="/dashboard-page"><p>Log ind</p></Link></div>
 
           </div>
 
