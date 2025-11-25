@@ -90,9 +90,64 @@
     height: 50px;
     color: white;
     border-radius: 25px;
+    cursor: pointer;
 }
 
 .sletknapdiv {
     padding-top: 30px;
     align-self: center;
+}
+
+/* Popup overlay */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+/* Popup modal */
+.popup-modal {
+  background-color: white;
+  padding: 1.5rem;
+  width: 551px;
+  height: 234px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Knapper container */
+.popup-buttons {
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Annuller-knap */
+.btn-cancel {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  background-color: #1B406F;
+  color: white;
+  cursor: pointer;
+  border-radius: 25px;
+}
+
+/* Slet-knap */
+.btn-delete {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  background-color: #1B406F;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 25px;
 }
