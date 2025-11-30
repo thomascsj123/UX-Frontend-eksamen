@@ -26,9 +26,9 @@ export default function DashboardPage() {
 
 
         if (loading === true) {
-            Loader.style.display = "flex"; //set the Loaders display value to "flex" to show it
+            Loader.style.display = "flex"; 
             setTimeout(() => { Loader.style.display = "none"; }, 1500);
-            setLoading(false); //now when loading is false the the if statemnet cant be run
+            setLoading(false); 
         }
 
         console.log("user has logged in as a", userRole)
