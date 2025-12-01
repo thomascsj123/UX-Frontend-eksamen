@@ -90,7 +90,7 @@ export default function Laaslokale() {
   return (
     <div className="eksisterendebookinger">
       {/* Popup 1: Vis eksisterende bookinger */}
-      <Modal open={popupOpen} onClose={() => setPopupOpen(false)}>
+      <Modal open={popupOpen} onClose={() => setPopupOpen(false)} className="modal-overlay, modal-content">
         <h3>Eksisterende bookinger</h3>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
@@ -126,15 +126,17 @@ export default function Laaslokale() {
       </Modal>
 
       {/* Popup 2: Bekræft sletning */}
-      <Modal open={confirmPopupOpen} onClose={() => setConfirmPopupOpen(false)}>
+      <Modal open={confirmPopupOpen} onClose={() => setConfirmPopupOpen(false)} className="confirm-popup">
+        
         {selectedBookingInfo && (
           <>
             <p>
-              Bekræft venligst låsning af {selectedBookingInfo.room_id} fra
+              Bekræft venligst låsning af lokale {selectedBookingInfo.room_id}
               <br />
-              {dayjs(selectedBookingInfo.created_at).format("DD/MM/YYYY HH:mm")} til
-              <br />
-              {dayjs(selectedBookingInfo.ends_at).format("DD/MM/YYYY HH:mm")}.
+              fra {""}
+              {dayjs(selectedBookingInfo.created_at).format("DD/MM/YYYY HH:mm")} til {""}
+              
+              {dayjs(selectedBookingInfo.ends_at).format("DD/MM/YYYY HH:mm")}
             </p>
             <div className="bluebuttonpopupdiv">
               <BlueButtonSmall label="Bekræft" onClick={handleDeleteBooking} />
@@ -142,12 +144,15 @@ export default function Laaslokale() {
             </div>
           </>
         )}
+        
       </Modal>
 
       {/* Popup 3: Succes */}
-      <Modal open={successPopupOpen} onClose={() => setSuccessPopupOpen(false)}>
+      <Modal open={successPopupOpen} onClose={() => setSuccessPopupOpen(false)} className="confirm-popup">
+    
         <h3>Lokalet er nu blevet låst!</h3>
-        <BlueButtonSmall label="Se alle låste lokaler" onClick={() => window.location.href = "/laaste-lokaler"} />
+        <br />
+        <BlueButtonSmall label="Se alle låste lokaler" onClick={() => window.location.href = "/allelaaste"} className="allelaasteknap" width="200px"/>
       </Modal>
 
       {/* Resten af UI */}

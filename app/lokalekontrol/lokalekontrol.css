@@ -204,7 +204,7 @@
 }
 
 .modal-content {
-  background: white;
+  background: rgb(255, 255, 255);
   padding: 30px;
   height: 600px;
   border-radius: 12px;
@@ -217,6 +217,16 @@
   justify-content: center;
   gap: 20px;
   padding-top: 50px;
+}
+
+.confirm-popup {
+  background-color: #ffffff;
+  width: 550px;
+  height: 250px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 
