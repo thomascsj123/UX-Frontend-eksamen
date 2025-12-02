@@ -6,7 +6,7 @@ import "./globals.css";
 
 
 import '@mantine/core/styles.css';
-import '@mantine/dates/styles.css'; // Add this for date picker styles
+import '@mantine/dates/styles.css'; 
 import { MantineProvider } from '@mantine/core';
 export const metadata = {
 
