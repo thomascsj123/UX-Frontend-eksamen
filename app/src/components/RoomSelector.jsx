@@ -1,3 +1,6 @@
+import PropTypes from 'prop-types'
+
+// Håndterer valg af etage og markerer det valgte lokale
 export default function RoomSelector({ floors, rooms, selectedFloor, selectedRoom, onFloorChange, onRoomToggle, hasError }) {
   return (
     <div style={{ width: '100%' }}>
@@ -29,13 +32,13 @@ export default function RoomSelector({ floors, rooms, selectedFloor, selectedRoo
             </button>
           ))}
         </div>
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          gap: '0.5rem', 
-          backgroundColor: '#d1d5db', 
-          padding: '0.75rem', 
-          borderRadius: '4px' 
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem',
+          backgroundColor: '#d1d5db',
+          padding: '0.75rem',
+          borderRadius: '4px'
         }}>
           {rooms[selectedFloor].map(room => (
             <div key={room} style={{ 
@@ -65,7 +68,7 @@ export default function RoomSelector({ floors, rooms, selectedFloor, selectedRoo
                   color: '#1e40af',
                   fontWeight: 'bold'
                 }}>
-                  {selectedRoom === room ? '✓' : ''}
+                  {selectedRoom === room ? 'X' : ''}
                 </span>
               </label>
               <span style={{ fontSize: '0.875rem', color: '#374151' }}>{room}</span>
@@ -75,5 +78,15 @@ export default function RoomSelector({ floors, rooms, selectedFloor, selectedRoo
       </div>
     </div>
   )
+}
+
+RoomSelector.propTypes = {
+  floors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  rooms: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+  selectedFloor: PropTypes.string.isRequired,
+  selectedRoom: PropTypes.string,
+  onFloorChange: PropTypes.func.isRequired,
+  onRoomToggle: PropTypes.func.isRequired,
+  hasError: PropTypes.bool
 }
 

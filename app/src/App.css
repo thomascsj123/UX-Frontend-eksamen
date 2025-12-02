@@ -20,12 +20,42 @@
 .logo-container {
   display: flex;
   align-items: center;
+  gap: 1rem;
 }
 
 .logo-image {
   height: 250px;
   width: auto;
   object-fit: contain;
+}
+
+.role-selector {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: 1rem;
+}
+
+.role-button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.role-button:hover {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.role-button.active {
+  background-color: #1e40af;
+  color: #ffffff;
+  border-color: #1e40af;
 }
 
 .breadcrumb {
@@ -50,22 +80,24 @@
 
 .booking-container {
   display: grid;
-  grid-template-columns: 1fr 1.2fr 1fr;
+  grid-template-columns: 1fr 1.2fr 1.2fr;
   margin-bottom: 2rem;
 }
 
 .booking-section {
   background-color: #ffffff;
-  padding: 1rem;
+  padding: 2rem;
 }
 
 .booking-section:first-child {
-  border: 1px solid black;
-  width: 60%;
+  width: 100%;
+  min-width: 300px;
 }
 
 .booking-section:nth-child(2) {
   margin-left: -1rem;
+  width: 100%;
+  padding:1rem;
 }
 
 .section-title {
@@ -73,6 +105,13 @@
   font-weight: 600;
   color: #374151;
   margin-bottom: 0.75rem;
+}
+
+.calendar-card {
+  border: 1px solid black;
+  padding: 1rem;
+  display: inline-block;
+  width: 300px;
 }
 
 .bottom-section {
@@ -92,8 +131,8 @@
   background-color: #1B406F;
   color: #ffffff;
   border: none;
-  padding: 0.75rem 2rem;
-  font-size: 0.875rem;
+  padding: 0.5rem 2rem;
+  font-size: 1.25rem;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
@@ -106,6 +145,36 @@
 
 .book-button:active {
   transform: scale(0.98);
+}
+
+.page-switcher {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background-color: #f3f4f6;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.switcher-button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  color: #1f2937;
+  font-size: 0.875rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.switcher-button.active {
+  background-color: #1e40af;
+  color: #ffffff;
+  border-color: #1e40af;
+}
+
+.switcher-button:not(.active):hover {
+  background-color: #e5e7eb;
 }
 
 

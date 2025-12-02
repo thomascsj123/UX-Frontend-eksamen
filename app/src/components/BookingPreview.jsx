@@ -1,4 +1,8 @@
+import PropTypes from 'prop-types'
+
+// Viser et lille resumé af den aktuelle booking med fejlstatus
 export default function BookingPreview({ selectedDate, selectedRoom, selectedTimeSlot, participants, hasValidationErrors }) {
+  // Formaterer datoen til dansk
   const formatDateForPreview = (date) => {
     const dayName = date.toLocaleDateString('da-DK', { weekday: 'long' })
     const day = date.getDate()
@@ -8,6 +12,7 @@ export default function BookingPreview({ selectedDate, selectedRoom, selectedTim
   }
 
   return (
+    // Container for bookingforhåndsvisningen
     <div style={{ 
       flex: 1, 
       maxWidth: '900px', 
@@ -68,6 +73,7 @@ export default function BookingPreview({ selectedDate, selectedRoom, selectedTim
           </span>
         </div>
       </div>
+      {/* Viser fejlbesked hvis der mangler påkrævede felter */}
       {hasValidationErrors && (
         <div style={{ 
           color: '#dc2626', 
@@ -83,5 +89,13 @@ export default function BookingPreview({ selectedDate, selectedRoom, selectedTim
       )}
     </div>
   )
+}
+
+BookingPreview.propTypes = {
+  selectedDate: PropTypes.instanceOf(Date).isRequired,
+  selectedRoom: PropTypes.string,
+  selectedTimeSlot: PropTypes.string,
+  participants: PropTypes.arrayOf(PropTypes.string).isRequired,
+  hasValidationErrors: PropTypes.bool.isRequired
 }
 

@@ -1,3 +1,6 @@
+import PropTypes from 'prop-types'
+
+// Viser tidsrum og giver admin genvej til at slette optagede slots
 export default function TimeSlotSelector({
   timeSlots,
   selectedTimeSlot,
@@ -5,7 +8,8 @@ export default function TimeSlotSelector({
   hasError,
   bookedTimeSlots = [],
   userRole = 'studerende',
-  onAdminDeleteBooking
+  onAdminDeleteBooking,
+  columns = 2
 }) {
   const isAdmin = userRole === 'admin'
   
@@ -21,14 +25,13 @@ export default function TimeSlotSelector({
       </h2>
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
+        gridTemplateColumns: `repeat(${columns}, 1fr)`,
         gap: '0.5rem',
         marginBottom: '1.5rem'
       }}>
         {timeSlots.map(slot => {
           const isSelected = selectedTimeSlot === slot
           const isBooked = bookedTimeSlots.includes(slot)
-          const canBook = !isBooked
           
           const handleClick = () => {
             if (isBooked) {
@@ -76,4 +79,15 @@ export default function TimeSlotSelector({
       </div>
     </div>
   )
+}
+
+TimeSlotSelector.propTypes = {
+  timeSlots: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedTimeSlot: PropTypes.string,
+  onTimeSlotSelect: PropTypes.func.isRequired,
+  hasError: PropTypes.bool,
+  bookedTimeSlots: PropTypes.arrayOf(PropTypes.string),
+  userRole: PropTypes.string,
+  onAdminDeleteBooking: PropTypes.func,
+  columns: PropTypes.number
 }

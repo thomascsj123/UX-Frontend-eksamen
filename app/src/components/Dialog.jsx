@@ -1,3 +1,6 @@
+import PropTypes from 'prop-types'
+
+// Genbrugelig modal med knapper der føres ind som prop
 export default function Dialog({ isOpen, message, buttons, onClose }) {
   if (!isOpen) return null
 
@@ -53,5 +56,15 @@ export default function Dialog({ isOpen, message, buttons, onClose }) {
       </div>
     </div>
   )
+}
+
+Dialog.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  message: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+  buttons: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired
+  })).isRequired,
+  onClose: PropTypes.func.isRequired
 }
 

@@ -1,3 +1,6 @@
+import PropTypes from 'prop-types'
+
+// Simpel formular til tilføjelse/fjernelse af deltagere
 export default function ParticipantsSection({ participantEmail, participants, onEmailChange, onAddParticipant, onRemoveParticipant }) {
   return (
     <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid #e5e7eb' }}>
@@ -73,5 +76,13 @@ export default function ParticipantsSection({ participantEmail, participants, on
       </div>
     </div>
   )
+}
+
+ParticipantsSection.propTypes = {
+  participantEmail: PropTypes.string.isRequired,
+  participants: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onEmailChange: PropTypes.func.isRequired,
+  onAddParticipant: PropTypes.func.isRequired,
+  onRemoveParticipant: PropTypes.func.isRequired
 }
 
