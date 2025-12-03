@@ -1,0 +1,242 @@
+.abtop {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 53px;
+  padding-left: 58px;
+
+}
+
+.ablogo {
+  width: 236px;
+  height: 66px;
+}
+
+.abtext {
+  font-family: 'Comic Sans', sans-serif;
+  color: #1B406F;
+  padding-left: 50px;
+}
+
+.abp {
+  font-weight: bold;
+}
+
+.overskrift {
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+}
+
+.aboverskrift {
+  font-size: 34px;
+  color: #1864AB;
+  font-weight: bold;
+}
+
+.klikboksdiv {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  padding-top: 60px;
+}
+
+.lokale {
+  width: 220px;
+  height: 105px;
+  background-color: #1B406F;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: background-color 0.5s;
+  transition: scale 0.5s;
+
+}
+
+.lokale:hover {
+  scale: 1.10;
+  background: rgb(74, 118, 176);
+  cursor: pointer;
+
+
+}
+
+
+.overskrift2 {
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.maincontent {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+
+.vaalglokalebox {
+  display: flex;
+  width: 400px;
+  height: 450px;
+  background-color: #95A6B7;
+}
+
+.kalenderflex {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.kalenderdiv {
+  background-color: #95A6B7;
+  display: flex;
+  justify-content: center;
+  width: 400px;
+  height: 400px;
+}
+
+.bluebutton {
+  font-weight: bold;
+
+}
+
+.bluebuttondiv {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+
+
+
+
+
+
+/* Box container */
+.box {
+  width: 450px;
+  height: 400px;
+  border: 2px solid #6a7a8c;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #95A6B7;
+  font-family: sans-serif;
+}
+
+/* Tabs header */
+.tabs-list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  border-bottom: 2px solid #6a7a8c;
+  background-color: #8a99ad;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 8px 0;
+  color: #ffffff;
+  font-weight: 600;
+  border-left: 1px solid #6a7a8c;
+  border-right: 1px solid #6a7a8c;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tab:first-child {
+  border-left: 2px solid #6a7a8c;
+  border-top-left-radius: 8px;
+}
+
+.tab:last-child {
+  border-right: 2px solid #6a7a8c;
+  border-top-right-radius: 8px;
+}
+
+.tab.active {
+  background-color: #e3eaf1;
+  color: #000000;
+  border-bottom: none;
+  position: relative;
+  bottom: -2px;
+}
+
+/* Tabs content panels */
+.tab-panel {
+  display: none;
+  padding-left: 25px;
+  padding-top: 20px;
+
+}
+
+.tab-panel.active {
+  display: block;
+
+}
+
+/* Rows inside panels */
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid #c0c8d0;
+  background-color: #F1F3F5;
+  border-radius: 10px;
+  width: 400px;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+/* Checkbox styling */
+.row input[type="checkbox"] {
+  transform: scale(1.2);
+}
+
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: rgb(255, 255, 255);
+  padding: 30px;
+  height: 600px;
+  border-radius: 12px;
+  width: 600px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.bluebuttonpopupdiv {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding-top: 50px;
+}
+
+.confirm-popup {
+  background-color: #ffffff;
+  width: 550px;
+  height: 250px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
