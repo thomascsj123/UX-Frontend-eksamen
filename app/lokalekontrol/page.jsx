@@ -2,6 +2,7 @@
 
 import './lokalekontrol.css';
 import { useRouter } from "next/navigation"
+import Link from "next/link";
 
 export default function Lokalekontrol () {
 
@@ -13,9 +14,9 @@ export default function Lokalekontrol () {
     return(
         <div>
             <div className="abtop">
-        <img className="ablogo" src="/timeann-img.png" alt="" />
+        <Link href="/dashboard-page"><img className="ablogo" src="/timeann-img.png" alt="" /></Link>
         <p className="abtext">
-          Dashboard / <span className="abp">Lokalekontrol</span>
+          <Link href="/dashboard-page" className="abtext hover:underline"> Dashboard </Link> / <span className="abp">Lokalekontrol</span>
         </p>
       </div>
 

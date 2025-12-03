@@ -79,7 +79,7 @@ export default function DashboardPage() {
 
                 <div className="dashboard-book-btn" id="book-mødelokale"><Link href="/mødelokale" ><p>Book mødelokale</p></Link></div>
                 <div className="dashboard-book-btn" id="book-undervisningslokale"><Link href="/undervisningslokale" ><p>Book undervisningslokale</p></Link></div>
-                <div className="dashboard-book-btn" id="alle-bookninger"><Link href="/alle-bookninger" ><p>Se alle bookninger</p></Link></div>
+                <div className="dashboard-book-btn" id="allebookinger"><Link href="/allebookinger" ><p>Se alle bookninger</p></Link></div>
                 <div className="dashboard-book-btn" id="lokalekontrol"><Link href="/lokalekontrol" ><p>Lokalekontrol</p></Link></div>
 
 

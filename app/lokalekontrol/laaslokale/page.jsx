@@ -8,6 +8,7 @@ import BlueButtonSmall from "../../components/BlueButtonSmall.jsx";
 import "../../lokalekontrol/lokalekontrol.css";
 import { createClient } from "@supabase/supabase-js";
 import Modal from "../../components/Popup.jsx";
+import Link from "next/link";
 
 export default function Laaslokale() {
   const supabase = createClient(
@@ -157,8 +158,8 @@ export default function Laaslokale() {
 
       {/* Resten af UI */}
       <div className="abtop">
-        <img className="ablogo" src="/timeann-img.png" alt="" />
-        <p className="abtext">Dashboard / Lokalekontrol / <span className="abp">Lås lokale</span></p>
+        <Link href="/dashboard-page"><img className="ablogo" src="/timeann-img.png" alt="" /></Link>
+        <p className="abtext"><Link href="/dashboard-page" className="abtext hover:underline"> Dashboard </Link> / <Link href="/lokalekontrol" className="hover:underline"> Lokalekontrol </Link> / <span className="abp">Lås lokale</span></p>
       </div>
 
       <div className="overskrift2">
@@ -234,6 +235,8 @@ export default function Laaslokale() {
           </div>
         </div>
       </div>
+      <br />
+      <br />
     </div>
   );
 }

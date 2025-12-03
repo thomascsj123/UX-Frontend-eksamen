@@ -10,53 +10,66 @@ import { supabase } from "@/app/supabaseClient";
 
 export default function Bookinger() {
   const [selected, setSelected] = useState([]);
-  const [showConfirm, setShowConfirm] = useState(false); // Popup state
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [bookedDates, setBookedDates] = useState([]);
+  const [selectedBookingInfo, setSelectedBookingInfo] = useState(null);
 
-  // Hent bookinger fra Supabase
+  // Hent brugerens mail
+  const userMail =
+    typeof window !== "undefined" ? sessionStorage.getItem("userMail") : null;
+
+  // Hent bookinger for den aktuelle bruger (baseret på participants)
   useEffect(() => {
     const fetchBookings = async () => {
+      if (!userMail) return;
+
       const { data, error } = await supabase
-        .from('session-table')
-        .select("created_at");
+        .from("session-table")
+        .select("id, room_id, created_at, ends_at, participants")
+        .ilike("participants", `%${userMail}%`); // 👈 VIGTIG ÆNDRING
 
       if (error) {
         console.error("Error fetching bookings:", error);
         return;
       }
 
-      const bookedDates = data.map((b) => new Date(b.created_at));
-      setSelected(bookedDates);
+      setBookedDates(data);
     };
 
     fetchBookings();
-  }, []);
+  }, [userMail]);
 
   // Klik på kalenderdag
   const handleSelect = (date) => {
     const isSelected = selected.some((s) => dayjs(date).isSame(s, "date"));
 
     if (isSelected) {
-      setSelected((current) =>
-        current.filter((d) => !dayjs(d).isSame(date, "date"))
-      );
+      setSelected([]);
+      setSelectedBookingInfo(null);
     } else {
-      setSelected((current) => [...current, date]);
+      setSelected([date]);
+
+      const found = bookedDates.find((b) =>
+        dayjs(b.created_at).isSame(date, "date")
+      );
+
+      setSelectedBookingInfo(found || null);
     }
   };
 
   // Håndter sletning
   const handleDelete = async () => {
-    try {
-      const dateToDelete = selected[0]; // Slet første valgte (tilpas som du vil)
-      await supabase
-        .from("session-table")
-        .delete()
-        .eq("created_at", dateToDelete.toISOString());
+    if (!selectedBookingInfo) return;
 
-      setSelected((current) =>
-        current.filter((d) => !dayjs(d).isSame(dateToDelete, "date"))
+    try {
+      await supabase.from("session-table").delete().eq("id", selectedBookingInfo.id);
+
+      setBookedDates((prev) =>
+        prev.filter((b) => b.id !== selectedBookingInfo.id)
       );
 
+      setSelected([]);
+      setSelectedBookingInfo(null);
       setShowConfirm(false);
     } catch (error) {
       console.error("Error deleting booking:", error);
@@ -80,21 +93,52 @@ export default function Bookinger() {
         <div className="knapdiv">
           <div className="dato">
             <p className="inputtext">Dato</p>
-            <input className="abinput" type="date" />
+            <input
+              className="abinput"
+              type="text"
+              value={
+                selectedBookingInfo
+                  ? dayjs(selectedBookingInfo.created_at).format("YYYY-MM-DD")
+                  : ""
+              }
+              readOnly
+            />
 
             <p className="inputtext">Lokale</p>
-            <input className="abinput" type="text" />
+            <input
+              className="abinput"
+              type="text"
+              value={selectedBookingInfo?.room_id || ""}
+              readOnly
+            />
 
             <p className="inputtext">Tidsrum</p>
-            <input className="abinput" type="time" />
+            <input
+              className="abinput"
+              type="text"
+              value={
+                selectedBookingInfo
+                  ? `${dayjs(selectedBookingInfo.created_at).format(
+                      "HH:mm"
+                    )} - ${dayjs(selectedBookingInfo.ends_at).format("HH:mm")}`
+                  : ""
+              }
+              readOnly
+            />
 
             <p className="inputtext">Deltagere</p>
-            <input className="abinput" type="text" />
+            <input
+              className="abinput"
+              type="text"
+              value={selectedBookingInfo?.participants || ""}
+              readOnly
+            />
           </div>
 
           <div className="sletknapdiv">
             <button
               className="sletknap"
+              disabled={!selectedBookingInfo}
               onClick={() => setShowConfirm(true)}
             >
               Slet booking
@@ -105,31 +149,45 @@ export default function Bookinger() {
         <div className="kalender">
           <div className="abkalender">
             <Calendar
-              getDayProps={(date) => ({
-                selected: selected.some((s) => dayjs(date).isSame(s, "date")),
-                onClick: () => handleSelect(date),
-              })}
+              getDayProps={(date) => {
+                const isSelected = selected.some((s) =>
+                  dayjs(date).isSame(s, "date")
+                );
+
+                const isBooked = bookedDates.some((b) =>
+                  dayjs(date).isSame(b.created_at, "date")
+                );
+
+                return {
+                  selected: isSelected,
+                  style: {
+                    backgroundColor: isBooked ? "#ffdf80" : undefined,
+                    borderRadius: isBooked ? "8px" : undefined,
+                  },
+                  onClick: () => handleSelect(date),
+                };
+              }}
             />
           </div>
         </div>
       </div>
 
       {/* Popup */}
-      {showConfirm && (
+      {showConfirm && selectedBookingInfo && (
         <div className="popup-overlay">
           <div className="popup-modal">
-            <p>Bekræft venligst sletning af booking af lokale 3.9, Mandag d. 10/12 fra kl. 08:00-09:15</p>
+            <p>
+              Bekræft sletning af lokale {selectedBookingInfo.room_id} d.{" "}
+              {dayjs(selectedBookingInfo.created_at).format("DD/MM")} fra{" "}
+              {dayjs(selectedBookingInfo.created_at).format("HH:mm")} –
+              {dayjs(selectedBookingInfo.ends_at).format("HH:mm")}
+            </p>
+
             <div className="popup-buttons">
-              <button
-                onClick={() => setShowConfirm(false)}
-                className="btn-cancel"
-              >
+              <button onClick={() => setShowConfirm(false)} className="btn-cancel">
                 Annuller
               </button>
-              <button
-                onClick={handleDelete}
-                className="btn-delete"
-              >
+              <button onClick={handleDelete} className="btn-delete">
                 Bekræft
               </button>
             </div>
