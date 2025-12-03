@@ -159,7 +159,7 @@ export default function Laaslokale() {
       {/* Resten af UI */}
       <div className="abtop">
         <Link href="/dashboard-page"><img className="ablogo" src="/timeann-img.png" alt="" /></Link>
-        <p className="abtext"><Link href="/dashboard-page" className="abtext hover:underline"> Dashboard </Link> / <Link href="/lokalekontrol" className="hover:underline"> Lokalekontrol </Link> / <span className="abp">Lås lokale</span></p>
+        <p className="abtext"><Link href="/dashboard-page" className="hover:underline"> Dashboard </Link> / <Link href="/lokalekontrol" className="hover:underline"> Lokalekontrol </Link> / <span className="abp">Lås lokale</span></p>
       </div>
 
       <div className="overskrift2">

@@ -7,10 +7,13 @@ import { Calendar } from "@mantine/dates";
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";
 import { supabase } from "@/app/supabaseClient";
+import { useRouter } from "next/navigation";
 
 export default function Bookinger() {
+  const router = useRouter();
   const [selected, setSelected] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [showDeletedPopup, setShowDeletedPopup] = useState(false);
   const [bookedDates, setBookedDates] = useState([]);
   const [selectedBookingInfo, setSelectedBookingInfo] = useState(null);
 
@@ -26,7 +29,7 @@ export default function Bookinger() {
       const { data, error } = await supabase
         .from("session-table")
         .select("id, room_id, created_at, ends_at, participants")
-        .ilike("participants", `%${userMail}%`); // 👈 VIGTIG ÆNDRING
+        .ilike("participants", `%${userMail}%`);
 
       if (error) {
         console.error("Error fetching bookings:", error);
@@ -70,7 +73,10 @@ export default function Bookinger() {
 
       setSelected([]);
       setSelectedBookingInfo(null);
+
       setShowConfirm(false);
+      setShowDeletedPopup(true); // 👉 NY POPUP VISNING
+
     } catch (error) {
       console.error("Error deleting booking:", error);
     }
@@ -79,9 +85,9 @@ export default function Bookinger() {
   return (
     <div>
       <div className="abtop">
-        <img className="ablogo" src="/timeann-img.png" alt="" />
+        <Link href="/dashboard-page"><img className="ablogo" src="/timeann-img.png" alt="" /></Link>
         <p className="abtext">
-          Dashboard / <span className="abp">Alle bookinger</span>
+          <Link href="/dashboard-page" className="hover:underline"> Dashboard </Link> / <span className="abp">Alle bookinger</span>
         </p>
       </div>
 
@@ -172,12 +178,12 @@ export default function Bookinger() {
         </div>
       </div>
 
-      {/* Popup */}
+      {/* Popup 1 – Bekræft sletning */}
       {showConfirm && selectedBookingInfo && (
         <div className="popup-overlay">
           <div className="popup-modal">
             <p>
-              Bekræft sletning af lokale {selectedBookingInfo.room_id} d.{" "}
+              Bekræft venligst sletning af booking af lokale {selectedBookingInfo.room_id} d.{" "}
               {dayjs(selectedBookingInfo.created_at).format("DD/MM")} fra{" "}
               {dayjs(selectedBookingInfo.created_at).format("HH:mm")} –
               {dayjs(selectedBookingInfo.ends_at).format("HH:mm")}
@@ -189,6 +195,31 @@ export default function Bookinger() {
               </button>
               <button onClick={handleDelete} className="btn-delete">
                 Bekræft
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Popup 2 – Bookingen er slettet */}
+      {showDeletedPopup && (
+        <div className="popup-overlay">
+          <div className="popup-modal">
+            <p>Bookingen er slettet!</p>
+
+            <div className="popup-buttons">
+              <button
+                onClick={() => router.push("/dashboard-page")}
+                className="btn-delete"
+                >
+                  Foretag ny booking
+</button>
+
+              <button
+                onClick={() => setShowDeletedPopup(false)}
+                className="btn-cancel"
+              >
+                Tilbage til alle bookinger
               </button>
             </div>
           </div>
