@@ -1,102 +1,114 @@
 .abtop {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-top: 53px;
-    padding-left: 58px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 53px;
+  padding-left: 58px;
 
 }
 
 .ablogo {
-    width: 236px;
-    height: 66px;
+  width: 236px;
+  height: 66px;
 }
 
 .abtext {
-    font-family: 'Comic Sans', sans-serif;
-    color: #1B406F;
-    padding-left: 50px;
+  font-family: 'Comic Sans', sans-serif;
+  color: #1B406F;
+  padding-left: 50px;
 }
 
 .abp {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .overskrift {
-    display: flex;
-    justify-content: center;
-    padding-top: 100px;
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
 }
 
 .aboverskrift {
-    font-size: 34px;
-    color: #1864AB;
-    font-weight: bold;
+  font-size: 34px;
+  color: #1864AB;
+  font-weight: bold;
 }
 
 .klikboksdiv {
-    display: flex;
-    justify-content: center;
-    gap: 100px;
-    padding-top: 60px;
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  padding-top: 60px;
 }
 
 .lokale {
-    width: 220px;
-    height: 105px;
-    background-color: #1B406F;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 1.2em;
-    cursor: pointer;
+  width: 220px;
+  height: 105px;
+  background-color: #1B406F;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: background-color 0.5s;
+  transition: scale 0.5s;
+
 }
 
+.lokale:hover {
+  scale: 1.10;
+  background: rgb(74, 118, 176);
+  cursor: pointer;
+
+
+}
+
+
 .overskrift2 {
-    display: flex;
-    justify-content: center;
-    padding-top: 50px;
-    padding-bottom: 50px;
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 .maincontent {
-    display: flex;
-    justify-content: center;
-    gap: 50px;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
 }
 
 .vaalglokalebox {
-    display: flex;
-    width: 400px;
-    height: 450px;
-    background-color: #95A6B7;
+  display: flex;
+  width: 400px;
+  height: 450px;
+  background-color: #95A6B7;
 }
 
 .kalenderflex {
-    display: flex;
-    flex-direction: column;
-    
+  display: flex;
+  flex-direction: column;
+
 }
 
 .kalenderdiv {
-    background-color: #95A6B7;
-    display: flex;
-    justify-content: center;
-    width: 400px;
-    height: 400px;
+  background-color: #95A6B7;
+  display: flex;
+  justify-content: center;
+  width: 400px;
+  height: 400px;
 }
 
 .bluebutton {
-    font-weight: bold;
-    
+  font-weight: bold;
+
 }
 
 .bluebuttondiv {
-    display: flex;
-    justify-content: center;
-    padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
 }
 
 
@@ -160,12 +172,10 @@
   display: none;
   padding-left: 25px;
   padding-top: 20px;
-  
 }
 
 .tab-panel.active {
   display: block;
-  
 }
 
 /* Rows inside panels */
@@ -209,7 +219,7 @@
   height: 600px;
   border-radius: 12px;
   width: 600px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .bluebuttonpopupdiv {
@@ -228,6 +238,3 @@
   flex-direction: column;
   align-items: center;
 }
-
-
-

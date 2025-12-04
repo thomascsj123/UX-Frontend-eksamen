@@ -14,9 +14,9 @@ export default function Lokalekontrol () {
     return(
         <div>
             <div className="abtop">
-        <Link href="/dashboard-page"><img className="ablogo" src="/timeann-img.png" alt="" /></Link>
+        <img className="ablogo" src="/timeann-img.png" alt="" />
         <p className="abtext">
-          <Link href="/dashboard-page" className="hover:underline"> Dashboard </Link> / <span className="abp">Lokalekontrol</span>
+         <Link href="/dashboard-page">Dashboard / </Link> <Link href="/lokalekontrol"> <span className="abp">Lokalekontrol</span> </Link>  
         </p>
       </div>
 
@@ -27,7 +27,7 @@ export default function Lokalekontrol () {
         <div className='klikboksdiv'>
 
             <button className='lokale' onClick={() => router.push("/lokalekontrol/laaslokale")}>Lås lokale</button>
-            <button className='lokale' onClick={() => router.push("/lokalekontrol/laaslokale")}>Alle låste lokaler</button>
+            <button className='lokale' onClick={() => router.push("/lokalekontrol/allelaaste")}>Alle låste lokaler</button>
 
         </div>
 

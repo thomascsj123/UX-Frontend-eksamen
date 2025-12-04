@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";
 import { Calendar } from "@mantine/dates";
@@ -8,7 +9,6 @@ import BlueButtonSmall from "../../components/BlueButtonSmall.jsx";
 import "../../lokalekontrol/lokalekontrol.css";
 import { createClient } from "@supabase/supabase-js";
 import Modal from "../../components/Popup.jsx";
-import Link from "next/link";
 
 export default function Laaslokale() {
   const supabase = createClient(
@@ -158,8 +158,9 @@ export default function Laaslokale() {
 
       {/* Resten af UI */}
       <div className="abtop">
-        <Link href="/dashboard-page"><img className="ablogo" src="/timeann-img.png" alt="" /></Link>
-        <p className="abtext"><Link href="/dashboard-page" className="hover:underline"> Dashboard </Link> / <Link href="/lokalekontrol" className="hover:underline"> Lokalekontrol </Link> / <span className="abp">Lås lokale</span></p>
+        <img className="ablogo" src="/timeann-img.png" alt="" />
+        <p className="abtext">  <Link href="/dashboard-page">Dashboard / </Link> <Link href="/lokalekontrol">Lokalekontrol / </Link> <Link href="/lokalekontrol/laaslokale"><span className="abp">Lås lokale</span></Link> </p>
+       
       </div>
 
       <div className="overskrift2">
@@ -235,8 +236,6 @@ export default function Laaslokale() {
           </div>
         </div>
       </div>
-      <br />
-      <br />
     </div>
   );
 }

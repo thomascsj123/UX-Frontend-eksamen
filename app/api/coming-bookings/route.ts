@@ -7,11 +7,12 @@ const supabase = createClient(
 );
 
 export async function GET(request: Request) {
-  // Extract email from query parameters
+
+  // Extract logged email from the key "email"
   const { searchParams } = new URL(request.url);
   const userMail = searchParams.get('email');
   
-  // Validate that email was provided
+  // checks if mail is empty if not seessions are picked from the sessions table
   if (!userMail) {
     return NextResponse.json(
       { error: "Email parameter is required" }, 
