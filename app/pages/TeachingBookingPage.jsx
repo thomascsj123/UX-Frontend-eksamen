@@ -4,7 +4,10 @@ import BookingPage from './BookingPage'
 
 // Teaching booking page component
 const HALF_HOUR_SLOTS = createHalfHourSlots()
-const TEACHING_HOOK_OPTIONS = { timeSlots: HALF_HOUR_SLOTS }
+const TEACHING_HOOK_OPTIONS = { 
+  timeSlots: HALF_HOUR_SLOTS,
+  roomType: 'mødelokale' // This page is for meeting rooms
+}
 
 export default function TeachingBookingPage() {
   return (

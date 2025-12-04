@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 
 // Viser et lille resumé af den aktuelle booking med fejlstatus
-export default function BookingPreview({ selectedDate, selectedRoom, selectedTimeSlot, participants, hasValidationErrors }) {
+export default function BookingPreview({ selectedDate, selectedRoom, selectedTimeSlot, participants, roomType, hasValidationErrors }) {
   // Formaterer datoen til dansk
   const formatDateForPreview = (date) => {
     const dayName = date.toLocaleDateString('da-DK', { weekday: 'long' })
@@ -61,6 +61,18 @@ export default function BookingPreview({ selectedDate, selectedRoom, selectedTim
           </span>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', fontSize: '0.875rem' }}>
+          <span style={{ fontWeight: 500, color: '#374151' }}>Lokale type:</span>
+          <span style={{ 
+            backgroundColor: '#ffffff', 
+            border: '1px solid #000000', 
+            padding: '0.5rem', 
+            color: '#000000', 
+            borderRadius: '2px' 
+          }}>
+            {roomType || 'Ikke valgt'}
+          </span>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', fontSize: '0.875rem' }}>
           <span style={{ fontWeight: 500, color: '#374151' }}>Deltagere:</span>
           <span style={{ 
             backgroundColor: '#ffffff', 
@@ -96,6 +108,7 @@ BookingPreview.propTypes = {
   selectedRoom: PropTypes.string,
   selectedTimeSlot: PropTypes.string,
   participants: PropTypes.arrayOf(PropTypes.string).isRequired,
+  roomType: PropTypes.oneOf(['mødelokale', 'undervisningslokale']),
   hasValidationErrors: PropTypes.bool.isRequired
 }
 

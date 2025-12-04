@@ -18,6 +18,7 @@ const DEFAULT_TIME_SLOTS = [
 // Samler al booking-state, datofetch og Supabase sideeffekter i et sted
 export function useBookingController(options = {}) {
   const timeSlots = options.timeSlots ?? DEFAULT_TIME_SLOTS
+  const roomType = options.roomType ?? 'undervisningslokale' // Default to 'undervisningslokale'
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [currentMonth, setCurrentMonth] = useState(new Date())
   const [selectedFloor, setSelectedFloor] = useState('3 sal')
@@ -34,6 +35,13 @@ export function useBookingController(options = {}) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [showDeleteSuccessDialog, setShowDeleteSuccessDialog] = useState(false)
   const [deleteTargetSlot, setDeleteTargetSlot] = useState(null)
+  const [refreshTrigger, setRefreshTrigger] = useState(0)
+
+  // Helper function to check if two time ranges overlap
+  const doTimeRangesOverlap = (start1, end1, start2, end2) => {
+    // Two ranges overlap if: start1 < end2 AND start2 < end1
+    return start1 < end2 && start2 < end1
+  }
 
   // Overvåger ændringer i dato/lokale og henter bookinger fra Supabase
   useEffect(() => {
@@ -44,60 +52,89 @@ export function useBookingController(options = {}) {
       }
 
       try {
+        // Query a wider range to catch bookings that might end on the next day
         const startOfDay = new Date(selectedDate)
         startOfDay.setHours(0, 0, 0, 0)
-        const endOfDay = new Date(selectedDate)
-        endOfDay.setHours(23, 59, 59, 999)
+        const endOfNextDay = new Date(selectedDate)
+        endOfNextDay.setDate(endOfNextDay.getDate() + 1)
+        endOfNextDay.setHours(23, 59, 59, 999)
 
         const { data, error } = await supabase
           .from('session-table')
-          .select('ends_at')
+          .select('starts_at, ends_at')
           .eq('room_id', selectedRoom)
           .gte('ends_at', startOfDay.toISOString())
-          .lte('ends_at', endOfDay.toISOString())
+          .lte('ends_at', endOfNextDay.toISOString())
 
         if (error) {
           console.error('Error fetching bookings:', error)
           return
         }
 
+        console.log('Fetched bookings:', data)
+        console.log('Selected date:', selectedDate)
+        console.log('Selected room:', selectedRoom)
+
         const booked = []
-        if (data) {
-          const selectedDateStr = selectedDate.toDateString()
-          const nextDate = new Date(selectedDate)
-          nextDate.setDate(nextDate.getDate() + 1)
-          const nextDateStr = nextDate.toDateString()
+        if (data && data.length > 0) {
+          const bookedSet = new Set()
 
           data.forEach(booking => {
-            const endTime = new Date(booking.ends_at)
-            const bookingDateStr = endTime.toDateString()
-            const isSameDay = bookingDateStr === selectedDateStr
-            const isNextDay = bookingDateStr === nextDateStr
-
-            if (isSameDay || isNextDay) {
-              const endHour = endTime.getHours()
-              const endMinute = endTime.getMinutes()
-
+            // Get booking time range
+            const bookingStart = booking.starts_at ? new Date(booking.starts_at) : null
+            const bookingEnd = new Date(booking.ends_at)
+            
+            // If starts_at doesn't exist (old bookings), try to infer it or skip overlap check
+            if (!bookingStart) {
+              console.log('Warning: Booking missing starts_at, using end time matching only:', booking.ends_at)
+              // Fallback to old matching logic for backwards compatibility
+              const endHour = bookingEnd.getHours()
+              const endMinute = bookingEnd.getMinutes()
+              
               timeSlots.forEach(slot => {
                 const [start, end] = slot.split('-')
-                const [startHour, startMinute] = start.split(':').map(Number)
                 const [endHourStr, endMinuteStr] = end.split(':')
                 const slotEndHour = parseInt(endHourStr, 10)
                 const slotEndMinute = parseInt(endMinuteStr, 10)
-                const crossesMidnight =
-                  slotEndHour < startHour ||
-                  (slotEndHour === startHour && slotEndMinute < startMinute)
-                const matchesEnd = endHour === slotEndHour && endMinute === slotEndMinute
-
-                if ((isSameDay && matchesEnd && !crossesMidnight) ||
-                    (isNextDay && matchesEnd && crossesMidnight)) {
-                  booked.push(slot)
+                
+                if (endHour === slotEndHour && endMinute === slotEndMinute) {
+                  bookedSet.add(slot)
                 }
               })
+              return
             }
+
+            console.log(`Checking booking from ${bookingStart.toISOString()} to ${bookingEnd.toISOString()}`)
+
+            // For each time slot, check if it overlaps with this booking
+            timeSlots.forEach(slot => {
+              const [startStr, endStr] = slot.split('-')
+              const [startHour, startMinute] = startStr.split(':').map(Number)
+              const [endHour, endMinute] = endStr.split(':').map(Number)
+              
+              // Calculate time slot start and end times
+              const slotStart = new Date(selectedDate)
+              slotStart.setHours(startHour, startMinute, 0, 0)
+              
+              const slotEnd = new Date(selectedDate)
+              const crossesMidnight = endHour < startHour || (endHour === startHour && endMinute < startMinute)
+              if (crossesMidnight) {
+                slotEnd.setDate(slotEnd.getDate() + 1)
+              }
+              slotEnd.setHours(endHour, endMinute, 0, 0)
+
+              // Check if booking overlaps with this time slot
+              if (doTimeRangesOverlap(bookingStart, bookingEnd, slotStart, slotEnd)) {
+                bookedSet.add(slot)
+                console.log(`✓ Slot ${slot} overlaps with booking (${bookingStart.toISOString()} - ${bookingEnd.toISOString()})`)
+              }
+            })
           })
+
+          booked.push(...Array.from(bookedSet))
         }
 
+        console.log('Booked time slots:', booked)
         setBookedTimeSlots(booked)
       } catch (error) {
         console.error('Unexpected error fetching bookings:', error)
@@ -105,7 +142,7 @@ export function useBookingController(options = {}) {
     }
 
     fetchBookings()
-  }, [selectedDate, selectedRoom, timeSlots])
+  }, [selectedDate, selectedRoom, timeSlots, refreshTrigger])
 
   const handleMonthChange = (direction) => {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + direction, 1))
@@ -180,34 +217,92 @@ export function useBookingController(options = {}) {
   const handleConfirmBooking = async () => {
     try {
       if (bookedTimeSlots.includes(selectedTimeSlot)) {
+        alert('Dette tidsrum er allerede optaget!')
         setShowConfirmDialog(false)
         return
       }
 
+      // Calculate the time range for the new booking
       const endsAt = calculateEndTime(selectedDate, selectedTimeSlot)
+      const [start, end] = selectedTimeSlot.split('-')
+      const [startHour, startMinute] = start.split(':').map(Number)
+      const startDate = new Date(selectedDate)
+      startDate.setHours(startHour, startMinute, 0, 0)
+      const startsAt = startDate.toISOString()
+      
+      const newBookingStart = new Date(startsAt)
+      const newBookingEnd = new Date(endsAt)
+      
+      // Check for overlaps with existing bookings
+      const startOfDay = new Date(selectedDate)
+      startOfDay.setHours(0, 0, 0, 0)
+      const endOfNextDay = new Date(selectedDate)
+      endOfNextDay.setDate(endOfNextDay.getDate() + 1)
+      endOfNextDay.setHours(23, 59, 59, 999)
+      
+      const { data: existingBookings } = await supabase
+        .from('session-table')
+        .select('starts_at, ends_at')
+        .eq('room_id', selectedRoom)
+        .gte('ends_at', startOfDay.toISOString())
+        .lte('ends_at', endOfNextDay.toISOString())
+      
+      if (existingBookings) {
+        for (const existing of existingBookings) {
+          const existingStart = existing.starts_at ? new Date(existing.starts_at) : null
+          const existingEnd = new Date(existing.ends_at)
+          
+          // If starts_at exists, check for overlap
+          if (existingStart && doTimeRangesOverlap(newBookingStart, newBookingEnd, existingStart, existingEnd)) {
+            alert('Denne booking overlapper med en eksisterende booking!')
+            setShowConfirmDialog(false)
+            return
+          }
+          // Fallback: if no starts_at, check if end times match (backwards compatibility)
+          else if (!existingStart && existingEnd.getTime() === newBookingEnd.getTime()) {
+            alert('Dette tidsrum er allerede optaget!')
+            setShowConfirmDialog(false)
+            return
+          }
+        }
+      }
+      
+      console.log('Creating booking with starts_at:', startsAt, 'ends_at:', endsAt)
+      console.log('Selected date:', selectedDate)
+      console.log('Selected time slot:', selectedTimeSlot)
 
       const bookingData = {
         room_id: selectedRoom,
+        starts_at: startsAt, // Add starts_at for overlap detection (column needs to exist in DB)
         ends_at: endsAt,
         participation_: participants.length,
-        booked_by: userRole === 'admin' ? 1 : 0,
-        participants: participants 
+        booked_by: userRole === 'admin' ? '1' : '0',
+        participants: JSON.stringify(participants),
+        room_type: roomType // 'mødelokale' or 'undervisningslokale'
       }
 
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('session-table') 
         .insert([bookingData])
         .select()
 
-      if (!bookedTimeSlots.includes(selectedTimeSlot)) {
-        setBookedTimeSlots(prev => [...prev, selectedTimeSlot])
+      if (error) {
+        console.error('Error creating booking:', error)
+        alert(`Fejl ved oprettelse af booking: ${error.message}`)
+        setShowConfirmDialog(false)
+        return
       }
 
+      console.log('Booking created successfully:', data)
       setShowConfirmDialog(false)
       setShowSuccessDialog(true)
-      console.log('Booking created successfully:', data)
+      
+      // Trigger refresh of bookings
+      setRefreshTrigger(prev => prev + 1)
     } catch (error) {
       console.error('Unexpected error:', error)
+      alert(`Uventet fejl: ${error.message}`)
+      setShowConfirmDialog(false)
     }
   }
 
@@ -235,10 +330,12 @@ export function useBookingController(options = {}) {
         throw error
       }
 
-      setBookedTimeSlots(prev => prev.filter(s => s !== slot))
       setDeleteTargetSlot(null)
       setShowDeleteDialog(false)
       setShowDeleteSuccessDialog(true)
+      
+      // Trigger refresh of bookings
+      setRefreshTrigger(prev => prev + 1)
     } catch (error) {
       console.error('Error deleting booking:', error)
       // Ingen bruger-fejlmeddelelse; kun log i konsollen
@@ -272,7 +369,8 @@ export function useBookingController(options = {}) {
     constants: {
       floors: FLOORS,
       rooms: ROOMS,
-      timeSlots
+      timeSlots,
+      roomType
     },
     actions: {
       setSelectedDate,

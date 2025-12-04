@@ -58,7 +58,7 @@ export default function BookingPage({
     removeParticipant
   } = actions
 
-  const { floors, rooms, timeSlots } = constants
+  const { floors, rooms, timeSlots, roomType } = constants
   const { formatDateForPreview } = helpers
 
   // UI-struktur: header, inputs, preview og dialoger
@@ -125,6 +125,7 @@ export default function BookingPage({
             selectedRoom={selectedRoom}
             selectedTimeSlot={selectedTimeSlot}
             participants={participants}
+            roomType={roomType}
             hasValidationErrors={hasAttemptedBooking && Object.keys(validationErrors).length > 0}
           />
           <div className="book-button-container">
@@ -180,7 +181,8 @@ BookingPage.propTypes = {
   pageTitle: PropTypes.string,
   breadcrumbText: PropTypes.string,
   hookOptions: PropTypes.shape({
-    timeSlots: PropTypes.arrayOf(PropTypes.string)
+    timeSlots: PropTypes.arrayOf(PropTypes.string),
+    roomType: PropTypes.oneOf(['mødelokale', 'undervisningslokale'])
   }),
   timeSlotColumns: PropTypes.number
 }
