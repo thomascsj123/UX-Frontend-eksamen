@@ -10,6 +10,7 @@ import ParticipantsSection from '../components/ParticipantsSection'
 import BookingPreview from '../components/BookingPreview'
 import Dialog from '../components/Dialog'
 import { useBookingController } from '../hooks/useBookingController'
+import '../App.css';
 
 export default function BookingPage({
   pageTitle = 'Book Undervisningslokale',
