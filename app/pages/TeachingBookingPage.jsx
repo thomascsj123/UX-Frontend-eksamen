@@ -2,6 +2,7 @@
 
 import BookingPage from './BookingPage'
 
+// Teaching booking page component
 const HALF_HOUR_SLOTS = createHalfHourSlots()
 const TEACHING_HOOK_OPTIONS = { timeSlots: HALF_HOUR_SLOTS }
 
