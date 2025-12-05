@@ -1,6 +1,6 @@
 'use client'
 
-import BookingPage from './BookingPage'
+import BookingPage from '../page.jsx'
 
 // Teaching booking page component
 const HALF_HOUR_SLOTS = createHalfHourSlots()

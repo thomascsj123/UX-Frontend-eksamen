@@ -77,8 +77,8 @@ export default function DashboardPage() {
 
             <div className="dashboard-book-btn-con">
 
-                <div className="dashboard-book-btn" id="book-mødelokale" onClick={ () => (window.location.href = "/mødelokale") }><p>Book mødelokale</p></div>
-                <div className="dashboard-book-btn" id="book-undervisningslokale" onClick={ () => (window.location.href = "/undervisningslokale") }><p>Book undervisningslokale</p></div>
+                <div className="dashboard-book-btn" id="book-mødelokale" onClick={ () => (window.location.href = "/pages/moedelokale") }><p>Book mødelokale</p></div>
+                <div className="dashboard-book-btn" id="book-undervisningslokale" onClick={ () => (window.location.href = "/pages") }><p>Book undervisningslokale</p></div>
                 <div className="dashboard-book-btn" id="alle-bookninger" onClick={ () => (window.location.href = "/allebookinger") }><p>Se alle bookninger</p></div>
                 <div className="dashboard-book-btn" id="lokalekontrol" onClick={ () => (window.location.href = "/lokalekontrol") }><p>Lokalekontrol</p></div>
 
