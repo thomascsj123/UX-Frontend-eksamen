@@ -14,9 +14,9 @@ export default function Lokalekontrol () {
     return(
         <div>
             <div className="abtop">
-        <img className="ablogo" src="/timeann-img.png" alt="" />
+        <Link href="/dashboard-page"><img className="ablogo" src="/timeann-img.png" alt="" /></Link>
         <p className="abtext">
-         <Link href="/dashboard-page">Dashboard / </Link> <Link href="/lokalekontrol"> <span className="abp">Lokalekontrol</span> </Link>  
+         <Link href="/dashboard-page" className="hover:underline">Dashboard</Link> /  <Link href="/lokalekontrol"> <span className="abp">Lokalekontrol</span> </Link>  
         </p>
       </div>
 

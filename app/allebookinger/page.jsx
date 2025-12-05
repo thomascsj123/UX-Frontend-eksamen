@@ -17,18 +17,16 @@ export default function Bookinger() {
   const [bookedDates, setBookedDates] = useState([]);
   const [selectedBookingInfo, setSelectedBookingInfo] = useState(null);
 
-  // Hent brugerens mail
   const userMail =
     typeof window !== "undefined" ? sessionStorage.getItem("userMail") : null;
 
-  // Hent bookinger for den aktuelle bruger (baseret på participants)
   useEffect(() => {
     const fetchBookings = async () => {
       if (!userMail) return;
 
       const { data, error } = await supabase
         .from("session-table")
-        .select("id, room_id, created_at, ends_at, participants")
+        .select("id, room_id, starts_at, ends_at, participants")
         .ilike("participants", `%${userMail}%`);
 
       if (error) {
@@ -53,7 +51,7 @@ export default function Bookinger() {
       setSelected([date]);
 
       const found = bookedDates.find((b) =>
-        dayjs(b.created_at).isSame(date, "date")
+        dayjs(b.starts_at).isSame(date, "date")
       );
 
       setSelectedBookingInfo(found || null);
@@ -75,7 +73,7 @@ export default function Bookinger() {
       setSelectedBookingInfo(null);
 
       setShowConfirm(false);
-      setShowDeletedPopup(true); // 👉 NY POPUP VISNING
+      setShowDeletedPopup(true);
 
     } catch (error) {
       console.error("Error deleting booking:", error);
@@ -104,7 +102,7 @@ export default function Bookinger() {
               type="text"
               value={
                 selectedBookingInfo
-                  ? dayjs(selectedBookingInfo.created_at).format("YYYY-MM-DD")
+                  ? dayjs(selectedBookingInfo.starts_at).format("YYYY-MM-DD")
                   : ""
               }
               readOnly
@@ -124,7 +122,7 @@ export default function Bookinger() {
               type="text"
               value={
                 selectedBookingInfo
-                  ? `${dayjs(selectedBookingInfo.created_at).format(
+                  ? `${dayjs(selectedBookingInfo.starts_at).format(
                       "HH:mm"
                     )} - ${dayjs(selectedBookingInfo.ends_at).format("HH:mm")}`
                   : ""
@@ -161,7 +159,7 @@ export default function Bookinger() {
                 );
 
                 const isBooked = bookedDates.some((b) =>
-                  dayjs(date).isSame(b.created_at, "date")
+                  dayjs(date).isSame(b.starts_at, "date")
                 );
 
                 return {
@@ -184,8 +182,8 @@ export default function Bookinger() {
           <div className="popup-modal">
             <p>
               Bekræft venligst sletning af booking af lokale {selectedBookingInfo.room_id} d.{" "}
-              {dayjs(selectedBookingInfo.created_at).format("DD/MM")} fra{" "}
-              {dayjs(selectedBookingInfo.created_at).format("HH:mm")} –
+              {dayjs(selectedBookingInfo.starts_at).format("DD/MM")} fra{" "}
+              {dayjs(selectedBookingInfo.starts_at).format("HH:mm")} –
               {dayjs(selectedBookingInfo.ends_at).format("HH:mm")}
             </p>
 
@@ -211,9 +209,9 @@ export default function Bookinger() {
               <button
                 onClick={() => router.push("/dashboard-page")}
                 className="btn-delete"
-                >
-                  Foretag ny booking
-</button>
+              >
+                Foretag ny booking
+              </button>
 
               <button
                 onClick={() => setShowDeletedPopup(false)}

@@ -30,9 +30,9 @@ export default function Laaslokale() {
 
   const rooms = {
     1: ["1.10", "1.11", "1.13", "1.14", "1.15", "1.16"],
-    2: ["2.1", "2.11", "2.13", "2.14", "2.15", "2.16"],
-    3: ["3.1", "3.11", "3.13", "3.14", "3.15", "3.16"],
-    4: ["4.1", "4.11", "4.13", "4.14", "4.15", "4.16"],
+    2: ["2.10", "2.11", "2.13", "2.14", "2.15", "2.16"],
+    3: ["3.10", "3.11", "3.13", "3.14", "3.15", "3.16"],
+    4: ["4.10", "4.11", "4.13", "4.14", "4.15", "4.16"],
   };
 
   const handleSelect = (date) => {
@@ -52,7 +52,7 @@ export default function Laaslokale() {
       }
       const { data } = await supabase
         .from("session-table")
-        .select("id, room_id, created_at, ends_at, participants")
+        .select("id, room_id, starts_at, ends_at, participants")
         .in("room_id", selectedRooms);
 
       if (data) setBookedDates(data);
@@ -62,7 +62,7 @@ export default function Laaslokale() {
 
   const handleLockClick = () => {
     const conflicts = bookedDates.filter((booking) =>
-      selected.some((selDate) => dayjs(booking.created_at).isSame(selDate, "date"))
+      selected.some((selDate) => dayjs(booking.starts_at).isSame(selDate, "date"))
     );
 
     if (conflicts.length > 0) {
@@ -114,7 +114,7 @@ export default function Laaslokale() {
                 onChange={() => setSelectedBookingId(b.id)}
               />
               <p><strong>Lokale:</strong> {b.room_id}</p>
-              <p><strong>Start:</strong> {dayjs(b.created_at).format("DD/MM/YYYY HH:mm")}</p>
+              <p><strong>Start:</strong> {dayjs(b.starts_at).format("DD/MM/YYYY HH:mm")}</p>
               <p><strong>Slut:</strong> {dayjs(b.ends_at).format("DD/MM/YYYY HH:mm")}</p>
             </div>
           ))}
@@ -135,8 +135,7 @@ export default function Laaslokale() {
               Bekræft venligst låsning af lokale {selectedBookingInfo.room_id}
               <br />
               fra {""}
-              {dayjs(selectedBookingInfo.created_at).format("DD/MM/YYYY HH:mm")} til {""}
-              
+              {dayjs(selectedBookingInfo.starts_at).format("DD/MM/YYYY HH:mm")} til {""}
               {dayjs(selectedBookingInfo.ends_at).format("DD/MM/YYYY HH:mm")}
             </p>
             <div className="bluebuttonpopupdiv">
@@ -153,14 +152,17 @@ export default function Laaslokale() {
     
         <h3>Lokalet er nu blevet låst!</h3>
         <br />
-        <BlueButtonSmall label="Se alle låste lokaler" onClick={() => window.location.href = "/allelaaste"} className="allelaasteknap" width="200px"/>
+        <BlueButtonSmall label="Se alle låste lokaler" onClick={() => window.location.href = "/lokalekontrol/allelaaste"} className="allelaasteknap" width="200px"/>
       </Modal>
 
       {/* Resten af UI */}
       <div className="abtop">
-        <img className="ablogo" src="/timeann-img.png" alt="" />
-        <p className="abtext">  <Link href="/dashboard-page">Dashboard / </Link> <Link href="/lokalekontrol">Lokalekontrol / </Link> <Link href="/lokalekontrol/laaslokale"><span className="abp">Lås lokale</span></Link> </p>
-       
+        <Link href="/dashboard-page"><img className="ablogo" src="/timeann-img.png" alt="" /></Link>
+        <p className="abtext">
+          <Link href="/dashboard-page" className="hover:underline">Dashboard</Link> / 
+          <Link href="/lokalekontrol" className="hover:underline"> Lokalekontrol </Link> / 
+          <Link href="/lokalekontrol/laaslokale"><span className="abp"> Lås lokale</span></Link>
+        </p>
       </div>
 
       <div className="overskrift2">
@@ -217,7 +219,7 @@ export default function Laaslokale() {
             <Calendar
               getDayProps={(date) => {
                 const isSelected = selected.some((s) => dayjs(date).isSame(s, "date"));
-                const isBooked = bookedDates.some((b) => dayjs(date).isSame(b.created_at, "date"));
+                const isBooked = bookedDates.some((b) => dayjs(date).isSame(b.starts_at, "date"));
 
                 return {
                   selected: isSelected,
@@ -236,6 +238,8 @@ export default function Laaslokale() {
           </div>
         </div>
       </div>
+      <br />
+      <br />
     </div>
   );
 }

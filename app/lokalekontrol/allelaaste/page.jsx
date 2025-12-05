@@ -31,10 +31,10 @@ const [loading, setLoading] = useState(true);
     return (
         <div>
             <div className="abtop">
-                <Link href="/"> <img className="ablogo" src="/timeann-img.png" alt="" /> </Link>
+                <Link href="/dashboard-page"> <img className="ablogo" src="/timeann-img.png" alt="" /> </Link>
 
                 <p className="abtext">
-                    <Link href="/dashboard-page">Dashboard / </Link> <Link href="/lokalekontrol">lokalekontrol / </Link><span className="abp"><Link href="/lokalekontrol/allelaaste">Alle låste lokaler</Link></span>
+                    <Link href="/dashboard-page" className="hover:underline">Dashboard</Link> /  <Link href="/lokalekontrol" className="hover:underline">Lokalekontrol</Link> / <span className="abp"><Link href="/lokalekontrol/allelaaste">Alle låste lokaler</Link></span>
                 </p>
             </div>
 
