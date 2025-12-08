@@ -46,6 +46,26 @@ export function useBookingController(options = {}) {
     return start1 < end2 && start2 < end1
   }
 
+  // Hjælpefunktion til at få alle datoer i range
+  // Skal være defineret før useEffect der bruger den
+  const getDatesInRange = () => {
+    if (!selectedDate) return []
+    if (!enableDateRange || !selectedEndDate) return [selectedDate]
+    
+    const dates = []
+    const start = new Date(selectedDate)
+    start.setHours(0, 0, 0, 0)
+    const end = new Date(selectedEndDate)
+    end.setHours(0, 0, 0, 0)
+    
+    const current = new Date(start)
+    while (current <= end) {
+      dates.push(new Date(current))
+      current.setDate(current.getDate() + 1)
+    }
+    return dates
+  }
+
   // Overvåger ændringer i dato/lokale og henter bookinger fra Supabase
   useEffect(() => {
     const fetchBookings = async () => {
@@ -189,25 +209,6 @@ export function useBookingController(options = {}) {
       setSelectedDate(date)
       setSelectedEndDate(null)
     }
-  }
-
-  // Hjælpefunktion til at få alle datoer i range
-  const getDatesInRange = () => {
-    if (!selectedDate) return []
-    if (!enableDateRange || !selectedEndDate) return [selectedDate]
-    
-    const dates = []
-    const start = new Date(selectedDate)
-    start.setHours(0, 0, 0, 0)
-    const end = new Date(selectedEndDate)
-    end.setHours(0, 0, 0, 0)
-    
-    const current = new Date(start)
-    while (current <= end) {
-      dates.push(new Date(current))
-      current.setDate(current.getDate() + 1)
-    }
-    return dates
   }
 
   const handleRoomToggle = (room) => {
