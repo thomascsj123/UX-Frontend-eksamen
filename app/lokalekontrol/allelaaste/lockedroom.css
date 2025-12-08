@@ -1,0 +1,301 @@
+.abtop {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 53px;
+  padding-left: 58px;
+
+}
+
+.ablogo {
+  width: 236px;
+  height: 66px;
+}
+
+.abtext {
+  font-family: 'Comic Sans', sans-serif;
+  color: #1B406F;
+  padding-left: 50px;
+}
+
+.abp {
+  font-weight: bold;
+}
+
+.overskrift {
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+}
+
+.aboverskrift {
+  font-size: 34px;
+  color: #1864AB;
+  font-weight: bold;
+}
+
+.lockedroomdiv {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 70%;
+  gap: 40px;
+
+}
+
+.lokale {
+  width: 220px;
+  height: 105px;
+  background-color: #1B406F;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.overskrift2 {
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.locked-booking-con {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 500px;
+  height: 120px;
+
+}
+
+.locked-booking-background {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  background: rgba(149, 166, 183, 1);
+  width: 100%;
+  height: 80%;
+  border-radius: 8px;
+  padding: 10px;
+
+}
+
+.locked-booking-background p {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: sans-serif;
+  color: rgba(33, 37, 41, 1);
+
+
+}
+
+.locked-booking-title-con {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 30px;
+
+}
+
+.locked-booking-btn-con {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 60%;
+
+}
+
+.locked-booking-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 80%;
+  background-color: rgba(27, 64, 111, 1);
+  color: white;
+  border-radius: 32px;
+  transition: background-color 0.5s;
+  transition: scale 0.5s;
+
+
+}
+
+.locked-booking-btn p {
+  font-weight: 600;
+  font-size: 16px;
+  color: white;
+
+
+}
+
+.locked-booking-btn:hover {
+  scale: 1.02;
+  background-color: rgb(74, 118, 176);
+  cursor: pointer;
+
+}
+
+.locked-booking-info-con {
+  display: flex;
+  width: 100%;
+  height: 20%;
+  flex-direction: row;
+}
+
+.locked-booking-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+
+}
+
+.locked-booking-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+
+
+}
+
+.lockbooking-popup {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1100px;
+  height: 700px;
+  background: white;
+  z-index: 9999;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  padding: 40px;
+}
+
+.lockbooking-popup-top-con {
+  display: flex;
+  width: 100%;
+  height: 60px;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.lockbooking-popup-close-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  background-color: rgba(27, 64, 111, 1);
+  color: white;
+  border-radius: 50%;
+  transition: background-color 0.5s;
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.lockbooking-popup-close-btn:hover {
+  background-color: rgb(74, 118, 176);
+  cursor: pointer;
+}
+
+.lockbooking-popup-main-con {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lockbooking-datepicker-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  gap: 80px;
+  flex: 1;
+ 
+}
+
+.lockbooking-datepicker-con {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.lockbooking-datepicker-title {
+  display: flex;
+  width: 100%;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.lockbooking-datepicker-title p {
+  font-weight: 700;
+  font-size: 18px;
+  color: rgba(27, 64, 111, 1);
+  margin: 0;
+}
+
+.edit-lockbooking-btn-con {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  gap: 40px;
+  margin-top: 40px;
+  padding-bottom: 20px;
+}
+
+.edit-lockbooking-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: rgba(27, 64, 111, 1);
+  width: 200px;
+  height: 50px;
+  border-radius: 32px;
+  cursor: pointer;
+  transition: background-color 0.3s, scale 0.3s;
+}
+
+.edit-lockbooking-btn:hover {
+  background-color: rgb(74, 118, 176);
+  
+}
+
+.edit-lockbooking-btn p {
+  font-weight: 600;
+  font-size: 16px;
+  margin: 0;
+  color: white;
+}
+
+.mantine-DateTimePicker-dropdown,
+.mantine-Popover-dropdown {
+  z-index: 10000 !important;
+}
