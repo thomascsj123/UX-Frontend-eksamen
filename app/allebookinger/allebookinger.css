@@ -1,0 +1,153 @@
+.abtop {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 53px;
+    padding-left: 58px;
+
+}
+
+.ablogo {
+    width: 236px;
+    height: 66px;
+}
+
+.abtext {
+    font-family: 'Comic Sans', sans-serif;
+    color: #1B406F;
+    padding-left: 50px;
+}
+
+.abp {
+    font-weight: bold;
+}
+
+.overskrift {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+}
+
+.aboverskrift {
+    font-size: 34px;
+    color: #1864AB;
+    font-weight: bold;
+}
+
+.abmain {
+    display: flex;
+    justify-content: center;
+    gap: 150px;
+    padding-top: 75px;
+}
+
+.dato {
+    background-color: #95A6B7;
+    width: 523px;
+    height: 340px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-top: 25px;
+    padding-left: 15px;
+}
+
+.kalender {
+    background-color: #95A6B7;
+    color: white;
+    border-radius: 16px;
+    width: 400px;
+    height: 340px;
+    display: flex;
+    justify-content: center;
+    font-size: 1.5em;
+}
+
+.abinput {
+    width: 95%;
+    background-color: white;
+    border: black 2px solid;
+}
+
+.inputtext {
+    font-weight: bold;
+}
+
+.abkalender {
+    padding-top: 15px;
+}
+
+.knapdiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.sletknap {
+    
+    background-color: #1B406F;
+    width: 200px;
+    height: 50px;
+    color: white;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.sletknapdiv {
+    padding-top: 30px;
+    align-self: center;
+}
+
+/* Popup overlay */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+/* Popup modal */
+.popup-modal {
+  background-color: white;
+  padding: 1.5rem;
+  width: 551px;
+  height: 234px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Knapper container */
+.popup-buttons {
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Annuller-knap */
+.btn-cancel {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  background-color: #1B406F;
+  color: white;
+  cursor: pointer;
+  border-radius: 25px;
+}
+
+/* Slet-knap */
+.btn-delete {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  background-color: #1B406F;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 25px;
+}
