@@ -1,0 +1,38 @@
+'use client'
+
+import BookingPage from '../page.jsx'
+
+const HALF_HOUR_SLOTS = createHalfHourSlots()
+const HOOK_OPTIONS = { 
+  timeSlots: HALF_HOUR_SLOTS,
+  roomType: 'mødelokale'
+}
+
+export default function TeachingBookingPage() {
+  return (
+    <BookingPage
+      pageTitle="Book mødelokale"
+      breadcrumbText="Dashboard / Book mødelokale"
+      hookOptions={HOOK_OPTIONS}
+      timeSlotColumns={4}
+    />
+  )
+}
+
+function createHalfHourSlots(startHour = 8, endHour = 24) {
+  const slots = []
+  const minutesPerDay = 24 * 60
+  for (let minutes = startHour * 60; minutes < endHour * 60; minutes += 30) {
+    const start = formatMinutes(minutes)
+    const end = formatMinutes((minutes + 30) % minutesPerDay)
+    slots.push(`${start}-${end}`)
+  }
+  return slots
+}
+
+function formatMinutes(totalMinutes) {
+  const hours = Math.floor(totalMinutes / 60) % 24
+  const minutes = totalMinutes % 60
+  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`
+}
+
